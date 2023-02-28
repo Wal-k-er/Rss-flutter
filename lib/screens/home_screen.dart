@@ -1,114 +1,96 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:habr_rss/all/habr_list.dart';
 import 'package:habr_rss/all/value_notifiers.dart';
+import 'package:habr_rss/constants/enums/categories.dart';
+import 'package:habr_rss/constants/environment_config.dart';
+import 'package:habr_rss/domain/models/theme_change_notifier.dart';
+import 'package:habr_rss/presents/widgets/theme_icon.dart';
+import 'package:habr_rss/presents/widgets/theme_switch_widget.dart';
+import 'package:provider/provider.dart';
 import 'package:webfeed/webfeed.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:habr_rss/all/fetch_http_habr.dart';
 
-class HomeScreenRss extends StatefulWidget {
-  const HomeScreenRss({super.key});
+class HomeRssPage extends StatefulWidget {
+  const HomeRssPage({super.key});
 
   @override
-  _HomeScreenRssState createState() {
-    return _HomeScreenRssState();
+  _HomeRssPageState createState() {
+    return _HomeRssPageState();
   }
 }
 
-class _HomeScreenRssState extends State {
-  bool _darkTheme = false;
+class _HomeRssPageState extends State {
+  // bool _darkTheme = false;
   final List _habsList = [];
-  String Url = 'https://habr.com/ru/rss/all/';
 
   @override
   void initState() {
     super.initState();
-    _setTheme();
+    // _setTheme();
   }
-
-  String baseurl = 'https://habr.com/ru/rss/';
 
   _setTheme() async {
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
-    setState(() {
-      if (_prefs.getBool('darkTheme') != null) {
-        _darkTheme = _prefs.getBool('darkTheme')!;
-      } else {
-        _darkTheme = false;
-      }
-    });
+    final _prefs = context.read<SharedPreferences>();
+
+    // setState(() {
+    //   if (_prefs.getBool('darkTheme') != null) {
+    //     _darkTheme = _prefs.getBool('darkTheme')!;
+    //   } else {
+    //     _darkTheme = false;
+    //   }
+    // });
   }
 
-  String dropdownurl = 'all/';
-  var urls = {
-    'all/': 'Все потоки',
-    'flows/develop/': 'Разработка',
-    'flows/admin/': 'Администрирование',
-    'flows/design/': 'Дизайн',
-    'flows/management/': 'Менеджмент',
-    'flows/marketing/': 'Маркетинг',
-    'flows/popsci/': 'Научпоп',
-  };
+  String dropdownurl = Categories.all.url;
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: !_darkTheme ? ThemeData.light() : ThemeData.dark(),
-      home: Scaffold(
-          appBar: AppBar(
-            title: const Text('Habr RSS'),
-            actions: [
-              buildDropdownButton(),
-              Icon(_getAppBarIcon()),
-              Switch(
-                  value: _darkTheme,
-                  onChanged: (bool value) {
-                    setState(() {
-                      _darkTheme = !_darkTheme;
-                      _saveTheme();
-                    });
-                  })
-            ],
-          ),
-          body: ValueListenableBuilder(
-            valueListenable: UrlState,
-            builder: (context, String url, child) {
-              print(url);
-              return FutureBuilder(
-                future: _getHttpHabs(url),
-                builder: (context, AsyncSnapshot snapshot) {
-                  if (!snapshot.hasData) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else {
-                    return HabrList(habsList: _habsList);
-                  }
-                },
-              );
-            },
-          )),
-    );
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('Habr RSS'),
+          actions: [
+            buildDropdownButton(),
+            ThemeIcon(),
+            ThemeSwitchWidget(),
+          ],
+        ),
+        body: ValueListenableBuilder(
+          valueListenable: UrlState,
+          builder: (context, String url, child) {
+            return FutureBuilder(
+              future: _getHttpHabs(url),
+              builder: (context, AsyncSnapshot snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else {
+                  return HabrList(habsList: _habsList);
+                }
+              },
+            );
+          },
+        ));
   }
 
   DropdownButton<String> buildDropdownButton() {
     return DropdownButton(
-      items: urls
-          .map((partUrl, text) {
-            return MapEntry(
-                text,
-                DropdownMenuItem(
-                  value: partUrl,
-                  child: Text(text),
-                ));
-          })
-          .values
-          .toList(),
+      items: List.generate(
+        Categories.values.length,
+        (index) => DropdownMenuItem(
+          value: Categories.values[index].url,
+          child: Text(Categories.values[index].title),
+        ),
+      ),
       value: dropdownurl,
       onChanged: (String? newValue) {
         setState(() {
           dropdownurl = newValue!;
-          UrlState.value = baseurl + dropdownurl;
+          UrlState.value = EnvironmentConfig.baseUrl + dropdownurl;
         });
       },
       iconEnabledColor: Colors.white,
@@ -121,14 +103,6 @@ class _HomeScreenRssState extends State {
     );
   }
 
-  _getAppBarIcon() {
-    if (_darkTheme) {
-      return Icons.lightbulb_outline;
-    } else {
-      return Icons.lightbulb;
-    }
-  }
-
   _getHttpHabs(value) async {
     if (_habsList.isNotEmpty) _habsList.clear();
     var responce = await fetchHttpHabs(value);
@@ -138,9 +112,6 @@ class _HomeScreenRssState extends State {
     }
     return _habsList;
   }
-
-  _saveTheme() async {
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
-    _prefs.setBool('darkTheme', _darkTheme);
-  }
 }
+
+

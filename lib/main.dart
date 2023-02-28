@@ -1,20 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:habr_rss/screens/home_screen.dart';
+import 'package:habr_rss/internals/app.dart';
+import 'package:habr_rss/internals/depency/dependency.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-void main() {
+  final sharedPreferences = await SharedPreferences.getInstance();
+  final dependency = Dependency(sharedPreferences: sharedPreferences);
 
-  runApp(const HomeScreen());
+  runApp(App(dependency: dependency));
 }
-
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const HomeScreenRss();
-  }
-
-}
-
-
