@@ -6,15 +6,5 @@ class Endpoints{
   static const String management = 'flows/management/';
   static const String marketing = 'flows/marketing/';
   static const String popSci = 'flows/popsci/';
-
-  var urls = {
-    'all/': 'Все потоки',
-    'flows/develop/': 'Разработка',
-    'flows/admin/': 'Администрирование',
-    'flows/design/': 'Дизайн',
-    'flows/management/': 'Менеджмент',
-    'flows/marketing/': 'Маркетинг',
-    'flows/popsci/': 'Научпоп',
-  };
 }
 

@@ -3,7 +3,6 @@ import 'package:html/parser.dart';
 
 fetchHttpHabs(url) {
   var client = http.Client();
-  print('object'+url);
   return client.get(Uri.parse(url));
 }
 

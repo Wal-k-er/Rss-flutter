@@ -1,7 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:habr_rss/all/html_body.dart';
 import 'package:habr_rss/domain/models/hab_model.dart';
+import 'package:habr_rss/internals/check_user_connection.dart';
 import 'package:html/parser.dart';
 
 import 'package:habr_rss/all/fetch_http_habr.dart';
@@ -9,7 +9,7 @@ import 'package:habr_rss/all/fetch_http_habr.dart';
 class ReadScreen extends StatefulWidget {
   final urlHab;
 
-  ReadScreen({@required this.urlHab});
+  const ReadScreen({super.key, @required this.urlHab});
 
   @override
   _ReadScreenState createState() => _ReadScreenState();
@@ -38,25 +38,31 @@ class _ReadScreenState extends State<ReadScreen> {
     return FutureBuilder(
       future: _getHttpHab(),
       builder: (context, AsyncSnapshot snapshot) {
-        if (!snapshot.hasData) {
-
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        } else {
-          return SingleChildScrollView(
-            child: Column(
-              children:[
-                Text(
-                  _habModel.title,
-                  textAlign: TextAlign.left,
-                  style: const TextStyle(
-                      fontSize: 20.0, fontWeight: FontWeight.bold
-                  ),
-                ),
-                HtmlBody(habModel: _habModel),
-              ]
-            ),
+        CheckUserConnection();
+        if(ActiveConnection){
+          if (!snapshot.hasData) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            return SingleChildScrollView(
+              child: Column(
+                  children:[
+                    Text(
+                      _habModel.title,
+                      textAlign: TextAlign.left,
+                      style: const TextStyle(
+                          fontSize: 20.0, fontWeight: FontWeight.bold
+                      ),
+                    ),
+                    HtmlBody(habModel: _habModel),
+                  ]
+              ),
+            );
+          }
+        } else{
+          return  const Center(
+            child: Text('Проверьте интернет-соединение'),
           );
         }
       },

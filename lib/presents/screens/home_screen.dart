@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:habr_rss/domain/models/theme_change_notifier.dart';
-import 'package:habr_rss/constants/enums/theme.dart' as theme_enum;
+import 'package:habr_rss/constants/enums/theme.dart' as themes;
 import 'package:habr_rss/screens/home_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -22,10 +22,10 @@ class HomeScreen extends StatelessWidget {
     final ThemeData theme;
 
     switch (themeNotifier.theme) {
-      case theme_enum.Theme.dark:
+      case themes.Theme.dark:
         theme = ThemeData.dark();
         break;
-      case theme_enum.Theme.light:
+      case themes.Theme.light:
         theme = ThemeData.light();
         break;
     }

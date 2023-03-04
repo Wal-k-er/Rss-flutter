@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:habr_rss/domain/models/theme_change_notifier.dart';
-import 'package:habr_rss/constants/enums/theme.dart' as theme_enum;
+import 'package:habr_rss/constants/enums/theme.dart' as themes;
 import 'package:provider/provider.dart';
 
 class ThemeSwitchWidget extends StatefulWidget {
@@ -25,11 +25,11 @@ class _ThemeSwitchWidgetState extends State<ThemeSwitchWidget> {
           setState(() {
             isActive = !isActive;
             switch (themeChangeNotifier.theme) {
-              case theme_enum.Theme.dark:
-                themeChangeNotifier.setTheme(theme_enum.Theme.light);
+              case themes.Theme.dark:
+                themeChangeNotifier.setTheme(themes.Theme.light);
                 break;
-              case theme_enum.Theme.light:
-                themeChangeNotifier.setTheme(theme_enum.Theme.dark);
+              case themes.Theme.light:
+                themeChangeNotifier.setTheme(themes.Theme.dark);
                 break;
             }
           });

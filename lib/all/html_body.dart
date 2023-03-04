@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+
 import 'package:habr_rss/domain/models/hab_model.dart';
 
 class HtmlBody extends StatelessWidget {
@@ -24,6 +25,9 @@ class HtmlBody extends StatelessWidget {
           );
         }
       },
+      onImageError: (exception, stacktrace){
+        print(exception);
+      },
       style: {
         'html': Style(
           color: Colors.grey,
@@ -43,10 +47,12 @@ class HtmlBody extends StatelessWidget {
             border: Border.all(
                 color: Colors.grey, width: 1, style: BorderStyle.solid),
             padding: const EdgeInsets.all(2)),
-        'img': Style(width: 700),
         'a': Style(
           textDecoration: TextDecoration.none,
           color: Colors.grey,
+        ),
+        'figure': Style(
+          display: Display.BLOCK,
         )
       },
     );
