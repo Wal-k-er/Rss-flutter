@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 
@@ -12,8 +14,31 @@ class HtmlBody extends StatelessWidget {
 
   final Hab _habModel;
 
+
+
+
   @override
   Widget build(BuildContext context) {
+    ImageSourceMatcher classAndIdMatcher() => (attributes, element) =>
+    attributes["class"] != null && attributes["id"] != null ;
+
+    ImageRender classAndIdRender() => (context, attributes, element) {
+
+        return Image.network(
+          attributes["src"] ?? "about:blank",
+          semanticLabel: attributes["longdesc"] ?? "",
+          width: double.parse(attributes["width"]!),
+          height: double.parse(attributes["height"]!),
+          alignment: Alignment.center,
+          color: context.style.color,
+          frameBuilder: (ctx, child, frame, _) {
+            if (frame == null) {
+              return Text(attributes["alt"] ?? "", style: context.style.generateTextStyle());
+            }
+            return child;
+          },
+        );
+    };
     return Html(
       data: _habModel.body,
       customRender: {
@@ -23,19 +48,18 @@ class HtmlBody extends StatelessWidget {
             textColor: Colors.blue,
             size: context.style.fontSize!.size! * 5,
           );
-        }
+        },
       },
-      onImageError: (exception, stacktrace){
-        print(exception);
+      customImageRenders: {
+        classAndIdMatcher(): classAndIdRender()
       },
       style: {
         'html': Style(
-          color: Colors.grey,
           fontSize: FontSize.large,
+          fontFamily: 'Times New Roman',
+          fontWeight: FontWeight.bold
         ),
         'p': Style(padding: const EdgeInsets.only(bottom: 10)),
-        'table': Style(backgroundColor: Colors.grey.shade200),
-        'tr': Style(backgroundColor: Colors.grey.shade400),
         'code': Style(
             border: Border.all(
               width: 1,
@@ -43,13 +67,17 @@ class HtmlBody extends StatelessWidget {
             ),
             whiteSpace: WhiteSpace.NORMAL,
             padding: const EdgeInsets.all(2)),
+        'table': Style(
+          alignment: Alignment.center,
+          verticalAlign: VerticalAlign.BASELINE
+        ),
         'pre': Style(
             border: Border.all(
                 color: Colors.grey, width: 1, style: BorderStyle.solid),
             padding: const EdgeInsets.all(2)),
         'a': Style(
           textDecoration: TextDecoration.none,
-          color: Colors.grey,
+
         ),
         'figure': Style(
           display: Display.BLOCK,

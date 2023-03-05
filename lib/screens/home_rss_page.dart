@@ -41,7 +41,8 @@ class _HomeRssPageState extends State {
             ThemeSwitchWidget(),
           ],
         ),
-        body: ValueListenableBuilder(
+        body:
+        ValueListenableBuilder(
           valueListenable: UrlState,
           builder: (context, String url, child) {
             return FutureBuilder(

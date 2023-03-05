@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:habr_rss/all/html_body.dart';
+import 'package:habr_rss/screens/html_body_read_page.dart';
 import 'package:habr_rss/domain/models/hab_model.dart';
 import 'package:habr_rss/internals/check_user_connection.dart';
 import 'package:html/parser.dart';

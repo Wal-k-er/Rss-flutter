@@ -2,7 +2,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
 import 'package:habr_rss/all/fetch_http_habr.dart';
-import 'package:habr_rss/screens/read_screen.dart';
+import 'package:habr_rss/presents/screens/read_screen.dart';
 
 class HabrList extends StatelessWidget {
   const HabrList({

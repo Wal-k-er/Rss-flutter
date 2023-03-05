@@ -1,7 +1,6 @@
 import 'dart:io';
 
 bool ActiveConnection = false;
-String T = "";
 Future CheckUserConnection() async {
   try {
     final result = await InternetAddress.lookup('google.com');
