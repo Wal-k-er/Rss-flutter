@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:habr_rss/domain/notifiers/theme_change_notifier.dart';
 import 'package:habr_rss/internals/depency/dependency.dart';
 import 'package:habr_rss/presents/screens/home_screen.dart';
 import 'package:habr_rss/constants/enums/theme.dart' as themes;
-import 'package:provider/provider.dart';
+
 
 class App extends StatefulWidget {
   const App({

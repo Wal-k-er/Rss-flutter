@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:habr_rss/internals/check_user_connection.dart';
 import 'package:webfeed/webfeed.dart';
 
 import 'package:habr_rss/all/habr_list.dart';
@@ -7,6 +6,7 @@ import 'package:habr_rss/all/value_notifiers.dart';
 import 'package:habr_rss/constants/enums/categories.dart';
 import 'package:habr_rss/constants/environment_config.dart';
 import 'package:habr_rss/presents/widgets/theme_icon.dart';
+import 'package:habr_rss/internals/check_user_connection.dart';
 import 'package:habr_rss/presents/widgets/theme_switch_widget.dart';
 import 'package:habr_rss/all/fetch_http_habr.dart';
 
@@ -58,8 +58,18 @@ class _HomeRssPageState extends State {
                     return HabrList(habsList: _habsList);
                   }
                 } else {
-                  return  const Center(
-                     child: Text('Проверьте интернет-соединение'),
+                  return Center(
+                     child: Column(
+                         children: [
+                            const Text(
+                              'Проверьте интернет-соединение',
+                            ),
+                            Image.asset(
+                              "assets/png/lost-connect.png",
+                            )
+                         ],
+                         mainAxisAlignment: MainAxisAlignment.center,
+                     )
                   );
                 }
 
