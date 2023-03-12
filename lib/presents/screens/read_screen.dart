@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:html/parser.dart';
 
-import 'package:habr_rss/presents/widgets/full_hab.dart';
+import 'package:habr_rss/presents/widgets/read_habr/full_hab.dart';
 import 'package:habr_rss/domain/models/hab_model.dart';
 import 'package:habr_rss/internals/check_user_connection.dart';
-import 'package:habr_rss/all/fetch_http_habr.dart';
+import 'package:habr_rss/internals/fetch_http_habr.dart';
 
 class ReadScreen extends StatefulWidget {
   final urlHab;

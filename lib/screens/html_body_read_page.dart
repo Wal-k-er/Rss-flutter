@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:habr_rss/domain/models/hab_model.dart';
-import 'package:habr_rss/presents/widgets/html_habr_body.dart';
+import 'package:habr_rss/presents/widgets/read_habr/html_habr_body.dart';
 
 class HtmlBody extends StatelessWidget {
   const HtmlBody({

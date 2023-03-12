@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:webfeed/webfeed.dart';
 
-import 'package:habr_rss/all/habr_list.dart';
-import 'package:habr_rss/all/value_notifiers.dart';
+import 'package:habr_rss/presents/widgets/habrs_list/habr_list.dart';
+import 'package:habr_rss/domain/notifiers/value_notifiers.dart';
 import 'package:habr_rss/constants/enums/categories.dart';
 import 'package:habr_rss/constants/environment_config.dart';
-import 'package:habr_rss/presents/widgets/theme_icon.dart';
+import 'package:habr_rss/presents/widgets/theme/theme_icon.dart';
 import 'package:habr_rss/internals/check_user_connection.dart';
-import 'package:habr_rss/presents/widgets/theme_switch_widget.dart';
-import 'package:habr_rss/all/fetch_http_habr.dart';
+import 'package:habr_rss/presents/widgets/theme/theme_switch_widget.dart';
+import 'package:habr_rss/internals/fetch_http_habr.dart';
 
 class HomeRssPage extends StatefulWidget {
   const HomeRssPage({super.key});
