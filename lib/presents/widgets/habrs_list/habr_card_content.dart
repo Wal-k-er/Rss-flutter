@@ -27,8 +27,11 @@ class HabrCardContent extends StatelessWidget {
         ),
         Row(
           children: [
-            Text(DateFormat('dd:mm:yyy kk:mm')
-                .format(DateTime.parse('${_habInfo.pubDate}'))),
+            Text(
+              DateFormat('dd:mm:yyy kk:mm').format(
+                DateTime.parse('${_habInfo.pubDate}'),
+              ),
+            ),
           ],
         ),
         const SizedBox(
@@ -44,9 +47,7 @@ class HabrCardContent extends StatelessWidget {
           height: 15.0,
         ),
         Row(
-          children: [
-            toReadScreenButton(context)
-          ],
+          children: [toReadScreenButton(context)],
         )
       ],
     );
@@ -54,16 +55,16 @@ class HabrCardContent extends StatelessWidget {
 
   FloatingActionButton toReadScreenButton(BuildContext context) {
     return FloatingActionButton.extended(
-            heroTag: null,
-            onPressed: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => ReadScreen(
-                  urlHab: '${_habInfo.guid}',
-                ),
-              ),
-            ),
-            label: const Text('Читать далее'),
-          );
+      heroTag: null,
+      onPressed: () => Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ReadScreen(
+            urlHab: '${_habInfo.guid}',
+          ),
+        ),
+      ),
+      label: const Text('Читать далее'),
+    );
   }
 }

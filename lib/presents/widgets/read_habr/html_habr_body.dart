@@ -15,25 +15,27 @@ class HtmlHabr extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ImageSourceMatcher classAndIdMatcher() => (attributes, element) =>
-    attributes["class"] != null && attributes["id"] != null;
+        attributes["class"] != null && attributes["id"] != null;
 
     ImageRender classAndIdRender() => (context, attributes, element) {
-      return Image.network(
-        attributes["src"] ?? "about:blank",
-        semanticLabel: attributes["longdesc"] ?? "",
-        width: double.parse(attributes["width"]!),
-        height: double.parse(attributes["height"]!),
-        alignment: Alignment.center,
-        color: context.style.color,
-        frameBuilder: (ctx, child, frame, _) {
-          if (frame == null) {
-            return Text(attributes["alt"] ?? "",
-                style: context.style.generateTextStyle());
-          }
-          return child;
-        },
-      );
-    };
+          return Image.network(
+            attributes["src"] ?? "about:blank",
+            semanticLabel: attributes["longdesc"] ?? "",
+            width: double.parse(attributes["width"]!),
+            height: double.parse(attributes["height"]!),
+            alignment: Alignment.center,
+            color: context.style.color,
+            frameBuilder: (ctx, child, frame, _) {
+              if (frame == null) {
+                return Text(
+                  attributes["alt"] ?? "",
+                  style: context.style.generateTextStyle(),
+                );
+              }
+              return child;
+            },
+          );
+        };
     return Html(
       data: _habModel.body,
       customRender: {
@@ -48,9 +50,10 @@ class HtmlHabr extends StatelessWidget {
       customImageRenders: {classAndIdMatcher(): classAndIdRender()},
       style: {
         'html': Style(
-            fontSize: FontSize.large,
-            fontFamily: 'Times New Roman',
-            fontWeight: FontWeight.bold),
+          fontSize: FontSize.large,
+          fontFamily: 'Times New Roman',
+          fontWeight: FontWeight.bold,
+        ),
         'p': Style(
           padding: const EdgeInsets.only(bottom: 10),
         ),
@@ -67,12 +70,13 @@ class HtmlHabr extends StatelessWidget {
           verticalAlign: VerticalAlign.BASELINE,
         ),
         'pre': Style(
-            border: Border.all(
-              color: Colors.grey,
-              width: 1,
-              style: BorderStyle.solid,
-            ),
-            padding: const EdgeInsets.all(2)),
+          border: Border.all(
+            color: Colors.grey,
+            width: 1,
+            style: BorderStyle.solid,
+          ),
+          padding: const EdgeInsets.all(2),
+        ),
         'a': Style(
           textDecoration: TextDecoration.none,
         ),
