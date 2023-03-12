@@ -1,13 +1,13 @@
 import 'dart:io';
 
-bool ActiveConnection = false;
-Future CheckUserConnection() async {
+bool activeConnection = false;
+Future checkUserConnection() async {
   try {
     final result = await InternetAddress.lookup('google.com');
     if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-        ActiveConnection = true;
+        activeConnection = true;
     }
   } on SocketException catch (_) {
-      ActiveConnection = false;
+      activeConnection = false;
   }
 }

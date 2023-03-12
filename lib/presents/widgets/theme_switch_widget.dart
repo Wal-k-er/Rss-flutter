@@ -20,19 +20,20 @@ class _ThemeSwitchWidgetState extends State<ThemeSwitchWidget> {
     final themeChangeNotifier = context.read<ThemeChangeNotifier>();
 
     return Switch(
-        value: isActive,
-        onChanged: (bool value) {
-          setState(() {
-            isActive = !isActive;
-            switch (themeChangeNotifier.theme) {
-              case themes.Theme.dark:
-                themeChangeNotifier.setTheme(themes.Theme.light);
-                break;
-              case themes.Theme.light:
-                themeChangeNotifier.setTheme(themes.Theme.dark);
-                break;
-            }
-          });
+      value: isActive,
+      onChanged: (bool value) {
+        setState(() {
+          isActive = !isActive;
+          switch (themeChangeNotifier.theme) {
+            case themes.Theme.dark:
+              themeChangeNotifier.setTheme(themes.Theme.light);
+              break;
+            case themes.Theme.light:
+              themeChangeNotifier.setTheme(themes.Theme.dark);
+              break;
+          }
         });
+      },
+    );
   }
 }

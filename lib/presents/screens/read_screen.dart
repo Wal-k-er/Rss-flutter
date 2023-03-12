@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:habr_rss/screens/html_body_read_page.dart';
-import 'package:habr_rss/domain/models/hab_model.dart';
-import 'package:habr_rss/internals/check_user_connection.dart';
 import 'package:html/parser.dart';
 
+import 'package:habr_rss/presents/widgets/full_hab.dart';
+import 'package:habr_rss/domain/models/hab_model.dart';
+import 'package:habr_rss/internals/check_user_connection.dart';
 import 'package:habr_rss/all/fetch_http_habr.dart';
 
 class ReadScreen extends StatefulWidget {
@@ -38,27 +38,14 @@ class _ReadScreenState extends State<ReadScreen> {
     return FutureBuilder(
       future: _getHttpHab(),
       builder: (context, AsyncSnapshot snapshot) {
-        CheckUserConnection();
-        if(ActiveConnection){
+        checkUserConnection();
+        if(activeConnection){
           if (!snapshot.hasData) {
             return const Center(
               child: CircularProgressIndicator(),
             );
           } else {
-            return SingleChildScrollView(
-              child: Column(
-                  children:[
-                    Text(
-                      _habModel.title,
-                      textAlign: TextAlign.left,
-                      style: const TextStyle(
-                          fontSize: 20.0, fontWeight: FontWeight.bold
-                      ),
-                    ),
-                    HtmlBody(habModel: _habModel),
-                  ]
-              ),
-            );
+            return FullHab(habModel: _habModel);
           }
         } else{
           return  const Center(
@@ -83,5 +70,7 @@ class _ReadScreenState extends State<ReadScreen> {
     return _habModel;
   }
 }
+
+
 
 

@@ -1,8 +1,6 @@
-import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 
-import 'package:habr_rss/all/fetch_http_habr.dart';
-import 'package:habr_rss/presents/screens/read_screen.dart';
+import 'package:habr_rss/presents/widgets/habr_card_content.dart';
 
 class HabrList extends StatelessWidget {
   const HabrList({
@@ -29,55 +27,12 @@ class HabrList extends StatelessWidget {
               vertical: 5.0,
               horizontal: 10.0,
             ),
-            child: Column(
-              children: [
-                Text(
-                  '${_habsList[index].title}',
-                  textAlign: TextAlign.left,
-                  style: const TextStyle(
-                    fontSize: 15.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Row(
-                  children: [
-                    Text(DateFormat('dd:mm:yyy kk:mm')
-                        .format(
-                        DateTime.parse('${_habsList[index].pubDate}'))
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 15.0,
-                ),
-                Text(
-                  '${getDescription(_habsList[index].description)}',
-                  style: const TextStyle(
-                    fontSize: 12.0,
-                  ),
-                ),
-                const SizedBox(
-                  height: 15.0,
-                ),
-                Row(
-                  children: [
-                    FloatingActionButton.extended(
-                      heroTag: null,
-                      onPressed: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ReadScreen(
-                                    urlHab: '${_habsList[index].guid}',
-                                  ))),
-                      label: const Text('Читать далее'),
-                    )
-                  ],
-                )
-              ],
-            ),
+            child: HabrCardContent(habInfo: _habsList[index]),
           ),
         );
       },
     );
   }
 }
+
+

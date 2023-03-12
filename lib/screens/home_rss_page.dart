@@ -23,12 +23,12 @@ class _HomeRssPageState extends State {
 
   @override
   void initState() {
-    CheckUserConnection();
+    checkUserConnection();
     super.initState();
   }
   final List _habsList = [];
 
-  String dropdownurl = Categories.all.url;
+  var dropdownurl = Categories.all.url;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class _HomeRssPageState extends State {
           title: const Text('Habr RSS'),
           actions: [
             buildDropdownButton(),
-            ThemeIcon(),
+            const ThemeIcon(),
             ThemeSwitchWidget(),
           ],
         ),
@@ -48,8 +48,8 @@ class _HomeRssPageState extends State {
             return FutureBuilder(
               future: _getHttpHabs(url),
               builder: (context, AsyncSnapshot snapshot) {
-                CheckUserConnection();
-                if(ActiveConnection) {
+                checkUserConnection();
+                if(activeConnection) {
                   if (!snapshot.hasData) {
                     return const Center(
                       child: CircularProgressIndicator(),
@@ -60,6 +60,7 @@ class _HomeRssPageState extends State {
                 } else {
                   return Center(
                      child: Column(
+                         mainAxisAlignment: MainAxisAlignment.center,
                          children: [
                             const Text(
                               'Проверьте интернет-соединение',
@@ -68,7 +69,6 @@ class _HomeRssPageState extends State {
                               "assets/png/lost-connect.png",
                             )
                          ],
-                         mainAxisAlignment: MainAxisAlignment.center,
                      )
                   );
                 }
@@ -91,7 +91,7 @@ class _HomeRssPageState extends State {
       ),
       value: dropdownurl,
       onChanged: (String? newValue) {
-        CheckUserConnection();
+        checkUserConnection();
         setState(() {
           dropdownurl = newValue!;
           UrlState.value = EnvironmentConfig.baseUrl + dropdownurl;
