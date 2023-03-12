@@ -20,19 +20,20 @@ class HomeRssPage extends StatefulWidget {
 }
 
 class _HomeRssPageState extends State {
-
   @override
   void initState() {
     checkUserConnection();
     super.initState();
   }
+
   final List _habsList = [];
 
   var dropdownurl = Categories.all.url;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SafeArea(
+      child: Scaffold(
         appBar: AppBar(
           title: const Text('Habr RSS'),
           actions: [
@@ -41,15 +42,14 @@ class _HomeRssPageState extends State {
             ThemeSwitchWidget(),
           ],
         ),
-        body:
-        ValueListenableBuilder(
+        body: ValueListenableBuilder(
           valueListenable: UrlState,
           builder: (context, String url, child) {
             return FutureBuilder(
               future: _getHttpHabs(url),
               builder: (context, AsyncSnapshot snapshot) {
                 checkUserConnection();
-                if(activeConnection) {
+                if (activeConnection) {
                   if (!snapshot.hasData) {
                     return const Center(
                       child: CircularProgressIndicator(),
@@ -59,24 +59,23 @@ class _HomeRssPageState extends State {
                   }
                 } else {
                   return Center(
-                     child: Column(
-                         mainAxisAlignment: MainAxisAlignment.center,
-                         children: [
-                            const Text(
-                              'Проверьте интернет-соединение',
-                            ),
-                            Image.asset(
-                              "assets/png/lost-connect.png",
-                            )
-                         ],
-                     )
-                  );
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Проверьте интернет-соединение',
+                      ),
+                      Image.asset(
+                        "assets/png/lost-connect.png",
+                      )
+                    ],
+                  ));
                 }
-
               },
             );
           },
-        )
+        ),
+      ),
     );
   }
 
@@ -99,8 +98,8 @@ class _HomeRssPageState extends State {
       },
       iconEnabledColor: Colors.white,
       borderRadius: const BorderRadius.horizontal(
-          left: Radius.circular(10.0),
-          right: Radius.circular(10.0),
+        left: Radius.circular(10.0),
+        right: Radius.circular(10.0),
       ),
       dropdownColor: Colors.blue,
       isExpanded: false,
